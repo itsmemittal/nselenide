@@ -1,103 +1,101 @@
 ﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using OpenQA.Selenium;
 
 namespace Nselenide
 {
     public class Condition
     {
-        public static Func<IWebElement, bool> Visible = element => element.Displayed;
-        public static Func<IWebElement, string, bool> Text = (element, s) => element.Text == s;
-        public static Func<IWebElement,bool> Exists = delegate(IWebElement element)
+        public static readonly Func<IWebElement,bool> Visible = VisibleFunc;
+
+        public static readonly Func<IWebElement,bool> Present = PresentFunc;
+
+        public static readonly Func<IWebElement,bool> Hidden = HiddenFunc;
+
+        public static Func<IWebElement,string,string,bool> HasAttribute = HasAttributeFunc;
+        
+        public static Func<IWebElement,string,bool> Attribute = AttributeFunc;
+
+        public static readonly Func<IWebElement, string, string, bool> Attributevalue = AttributeValueFunc;
+
+        public static readonly  Func<IWebElement,bool> ReadOnly = ReadOnlyFunc;
+
+        public static readonly Func<IWebElement,string,bool> HasValue = HasValueFunc;
+
+        public static readonly Func<IWebElement,bool> Enabled = EnabledFunc;
+
+        public static readonly  Func<IWebElement,bool> Disabled = DisabledFunc;
+
+        public static readonly Func<IWebElement,bool> Selected = SelectedFunc;
+
+        private static bool SelectedFunc(IWebElement webElement)
         {
-            var elem = element.Displayed;
+            return webElement.Selected;
+        }
+
+        private static bool DisabledFunc(IWebElement webElement)
+        {
+            return !webElement.Enabled;
+        }
+
+        private static bool EnabledFunc(IWebElement webElement)
+        {
+            return webElement.Enabled;
+        }
+
+        private static bool HasValueFunc(IWebElement webElement, string expectedValue)
+        {
+           return expectedValue.Equals(GetAttributeValue(webElement, "value"));
+        }
+        
+        private static bool VisibleFunc(IWebElement webElement)
+        {
+            return webElement.Displayed;
+        }
+
+        private static bool PresentFunc(IWebElement webElement)
+        {
+            var e = webElement.Displayed;
             return true;
-        };
+        }
 
-        public static Func<IWebElement, bool> Present = Exists;
-
-        public static Func<IWebElement, bool> Hidden = delegate(IWebElement element)
+        private static bool HiddenFunc(IWebElement webElement)
         {
             try
             {
-                return !element.Displayed;
+                return !webElement.Displayed;
             }
-            catch (StaleElementReferenceException elementHasDisappeared)
+            catch (StaleElementReferenceException)
             {
-                return true;
+                return false;
             }
-        };
+        }
 
-        public static Func<IWebElement, string, string, bool> HasAttribute =
-            (element, attributeName, expectedAttributeValue) =>
-                expectedAttributeValue.Equals(GetAttributeValue(element, attributeName));
+        private static bool HasAttributeFunc(IWebElement webElement, string s, string arg3)
+        {
+            return AttributeValueFunc(webElement, s, arg3);
+        }
 
-        public static Func<IWebElement,string,bool> Attribute =
-            (element, attributeName) => element.GetAttribute(attributeName) != null;
+        private static bool AttributeFunc(IWebElement webElement, string attributeName)
+        {
+            return webElement.GetAttribute(attributeName) != null;
+        }
 
-
-        public static Func<IWebElement, bool> ReadOnly = element => Attribute(element, "readonly"); 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private static bool AttributeValueFunc(IWebElement webElement, string attributeName, string attributeValue)
+        {
+            return attributeValue.Equals(GetAttributeValue(webElement, attributeName));
+        }
 
         private static string GetAttributeValue(IWebElement element, String attributeName)
         {
             String attr = element.GetAttribute(attributeName);
             return attr == null ? "" : attr.Trim();
         }
+
+        private static bool ReadOnlyFunc(IWebElement webElement)
+        {
+            return AttributeFunc(webElement, "readonly");
+        }
     }
 
-    //public class Conditions
-    //{
-    //    public static Func<IWebElement, bool> Visible = element => element.Displayed;
-
-    //    public static Func<IWebElement, bool> Enabled = element => element.Enabled;
-
-    //    public static Func<IWebElement, bool> Clickable = element => element.Enabled && element.Displayed;
-
-    //    public static Func<IWebElement, bool> Exists = CheckExists;
-
-    //    public static Func<IWebElement, bool> Present = CheckExists;
-
-    //    public static Func<IWebElement, bool> Hidden = CheckHidden;
-
-    //    public static Func<string, bool> ReadOnly = CheckAttribute(IWebElement);
-
-    //    public static Func<IWebElement, string, bool> HasAttribute = CheckAttribute;
- 
-
-    //    private static bool CheckAttribute(IWebElement element, string attributeName)
-    //    {
-    //        return element.GetAttribute(attributeName) != null;
-    //    }
-
-    //    private static bool CheckHidden(IWebElement element)
-    //    {
-    //        try
-    //        {
-    //            return !element.Displayed;
-    //        }
-    //        catch (StaleElementReferenceException elementSaElementReferenceException)
-    //        {
-    //            return true;
-    //        }
-    //    }
-
-    //    private static bool CheckExists(IWebElement element)
-    //    {
-    //        var displayed = element.Displayed;
-    //        return true;
-    //    }
-
-    //}
 }
