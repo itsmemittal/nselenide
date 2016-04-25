@@ -6,7 +6,7 @@ namespace Nselenide
     {
         private static readonly Navigator Navigator = new Navigator();
 
-        protected void Open(string relativeOrAbsoluteUrl)
+        public void Open(string relativeOrAbsoluteUrl)
         {
             Navigator.Open(relativeOrAbsoluteUrl);
         }
