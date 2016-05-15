@@ -1,23 +1,24 @@
-﻿using System;
+﻿using NSelenide.Impl;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
+using OpenQA.Selenium.Safari;
 
-namespace Nselenide
+namespace NSelenide.WebDriver
 {
     public class WebDriverFactory
     {
         public IWebDriver CreateDriver()
         {
-            IWebDriver driver =  WebDriverRunner.IsFirefox() ? CreateFirefoxDriver() : CreateInternetExploreDriver();
+            IWebDriver driver = WebDriverRunner.IsFirefox() ? CreateFirefoxDriver() : CreateFirefoxDriver();
             driver = Maximize(driver);
             return driver;
         }
 
         private IWebDriver Maximize(IWebDriver driver)
         {
-            if (Configuration.Maximize)
+            if (Settings.StartMaximize)
             {
                 driver.Manage().Window.Maximize();
             }
@@ -28,13 +29,8 @@ namespace Nselenide
         private IWebDriver CreateFirefoxDriver()
         {
             DesiredCapabilities capabilities = DesiredCapabilities.Firefox();
-            IWebDriver driver =  new FirefoxDriver();
+            IWebDriver driver = new FirefoxDriver();
             return driver;
-        }
-
-        private IWebDriver CreateInternetExploreDriver()
-        {
-            return  new InternetExplorerDriver();
         }
     }
 }

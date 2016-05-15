@@ -1,37 +1,60 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using System;
+using NSelenide.Impl;
+using OpenQA.Selenium;
 
-namespace Nselenide
+namespace NSelenide
 {
     public class WebDriverRunner
     {
+        private static WebDriverContainer container = new WebDriverContainer();
         private const string CHROME = "chrome";
         private const string INTERNET_EXPLORER = "ie";
         private const string FIREFOX = "firefox";
         private const string SAFARI = "safari";
 
-        public static WebDriverContainer webDriverContainer = new WebDriverContainer();
-
-        public static OpenQA.Selenium.IWebDriver GetWebDriver()
-        {
-           return webDriverContainer.GetWebDriver();
-        }
-
+        
         public static bool IsChrome()
         {
-            return CHROME.Equals(Configuration.Browser);
+            return CHROME.Equals(Settings.Browser,StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public static bool IsFirefox()
+        {
+            return FIREFOX.Equals(Settings.Browser,StringComparison.CurrentCultureIgnoreCase);
         }
 
         public static bool IsIE()
         {
-            return INTERNET_EXPLORER.Equals(Configuration.Browser);
+            return INTERNET_EXPLORER.Equals(Settings.Browser,StringComparison.CurrentCultureIgnoreCase);
         }
-        public static bool IsFirefox()
+
+        public static IWebDriver GetWebDriver()
         {
-            return FIREFOX.Equals(Configuration.Browser);
+            return container.GetWebDriver();
         }
-        public static bool IsSafari()
+
+        public static void SetWebDriver(IWebDriver driver)
         {
-            return SAFARI.Equals(Configuration.Browser);
+        }
+
+        public static void ClearBrowserCache()
+        {
+            container.ClearBrowserCache();
+        }
+
+        public static string CurrentFrameUrl()
+        {
+            return container.GetCurrentFrameUrl();
+        }
+
+        public static string Url()
+        {
+            return container.GetCurrentUrl();
+        }
+
+        public static string Source()
+        {
+            return container.GetPageSource();
         }
 
     }

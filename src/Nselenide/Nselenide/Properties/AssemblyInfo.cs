@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Nselenide")]
+[assembly: AssemblyTitle("NSelenide")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Nselenide")]
+[assembly: AssemblyProduct("NSelenide")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c023b3a1-d52d-4fce-b230-5dfb73c64c34")]
+[assembly: Guid("510445d4-f8db-4d31-b612-0c86f2ee85b0")]
 
 // Version information for an assembly consists of the following four values:
 //
