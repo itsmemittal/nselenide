@@ -46,7 +46,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlertDialog.cs" />
     <Compile Include="ByHelper.cs" />
+    <Compile Include="Exceptions\DialogTextMisMatchException.cs" />
     <Compile Include="Impl\Conditions\ClickableCondition.cs" />
     <Compile Include="DOM.cs" />
     <Compile Include="Exceptions\UnReachableBrowserException.cs" />

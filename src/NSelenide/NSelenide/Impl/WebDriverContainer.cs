@@ -36,13 +36,13 @@ namespace NSelenide.Impl
             IWebDriver driver;
             driverthreads.TryGetValue(Thread.CurrentThread.ManagedThreadId, out driver);
             if (driver == null) return SetWebDriver(factory.CreateDriver());
-            if (IsBrowserStillOpen(driver))
-            {
+            //if (IsBrowserStillOpen(driver))
+            //{
                 return driver;
-            }
+            //}
             
-            CloseWebDriver();
-            return SetWebDriver(factory.CreateDriver());
+            //CloseWebDriver();
+            //return SetWebDriver(factory.CreateDriver());
         }
 
         public void CloseWebDriver()
